@@ -44,4 +44,4 @@ This project helped me gain hands-on experience with:
 
 UI Preview
 ***************
-![App UI]()
+![App UI](User-Dashboard.png)
