@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Users App</title>
+</head>
+<body>
+
+  <h1>Users</h1>
+
+  <input type="text" id="nameInput" placeholder="Enter name">
+  <button onclick="addUser()">Add User</button>
+
+  <ul id="users"></ul>
+
+  <script>
+    const API = "/users";
+
+    function loadUsers() {
+      fetch(API)
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById("users");
+          list.innerHTML = "";
+
+          data.forEach(user => {
+            const li = document.createElement("li");
+            li.textContent = `ID: ${user.id} - ${user.name}`;
+            list.appendChild(li);
+          });
+        });
+    }
+
+    function addUser() {
+      const name = document.getElementById("nameInput").value;
+
+      if (!name) {
+        alert("Enter name");
+        return;
+      }
+
+      fetch(API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name })
+      })
+      .then(() => {
+        document.getElementById("nameInput").value = "";
+        loadUsers();
+      });
+    }
+
+    loadUsers();
+  </script>
+
+</body>
+</html>

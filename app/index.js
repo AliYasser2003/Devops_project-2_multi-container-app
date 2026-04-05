@@ -1,10 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const { Pool } = require("pg");
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
-// DB connection using env variables
+// ✅ DB connection (using environment variables)
 const pool = new Pool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -13,24 +16,7 @@ const pool = new Pool({
   port: 5432,
 });
 
-const connectWithRetry = async () => {
-  try {
-    await pool.query("SELECT 1");
-    console.log("Connected to DB ✅");
-  } catch (err) {
-    console.log("DB not ready, retrying...");
-    setTimeout(connectWithRetry, 2000);
-  }
-};
-
-connectWithRetry();
-
-// Test route
-app.get("/", (req, res) => {
-  res.send("API is running");
-});
-
-// Create table (auto-run once)
+// Create table
 app.get("/init", async (req, res) => {
   try {
     await pool.query(`
@@ -45,9 +31,12 @@ app.get("/init", async (req, res) => {
   }
 });
 
-// Insert user
+// Add user
 app.post("/users", async (req, res) => {
   const { name } = req.body;
+
+  if (!name) return res.status(400).send("Name required");
+
   try {
     await pool.query("INSERT INTO users(name) VALUES($1)", [name]);
     res.send("User added");
@@ -66,6 +55,7 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+// ✅ IMPORTANT: listen on 0.0.0.0 for Docker
+app.listen(3000, "0.0.0.0", () => {
   console.log("Server running on port 3000");
 });
