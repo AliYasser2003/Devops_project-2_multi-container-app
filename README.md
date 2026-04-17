@@ -34,7 +34,8 @@ API: http://localhost/users
 3) Proper separation of frontend (Nginx) and backend (Node.js)
 4) Implemented correct port and service configuration
 
-FINAL:
+###### FINAL:
+***************
 This project helped me gain hands-on experience with:
 1) build and run multi-container applications using Docker Compose
 2) how containers communicate using docker networks
@@ -42,6 +43,6 @@ This project helped me gain hands-on experience with:
 4) Also i learnt in it to debug container issues using:
      (docker ps), (docker logs), (docker inspect)
 
-###### UI Preview
+####### UI Preview
 ********************
 ![App UI](User-Dashboard.png)
