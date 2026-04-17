@@ -1,7 +1,7 @@
 * (SIMPLE UI AND FOCUSING ON THE ARCHITECTURE OF BUILDING AS DEVOPS ENGINEER)
 
 # Users Dashboard --Multi Container Application
-# *************************************************
+*************************************************
 This project demonstrates a production-style multi-container application using Docker Compose
 
 Architecture
